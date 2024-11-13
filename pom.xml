@@ -8,6 +8,7 @@
         <version>3.3.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <packaging>pom</packaging>
     <groupId>com.dariom</groupId>
     <artifactId>talent-flow-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -49,5 +50,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <modules>
+        <module>bootstrap</module>
+        <module>infrastructure</module>
+        <module>domainmodel</module>
+        <module>service</module>
+    </modules>
 
 </project>

@@ -1,4 +1,4 @@
-package com.example.domainmodel;
+package com.dariom.domainmodel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,10 +1,10 @@
-package com.example.domainmodel;
+package com.dariom.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DomainmodelApplicationTests {
+class ApiApplicationTests {
 
     @Test
     void contextLoads() {

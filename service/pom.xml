@@ -8,7 +8,7 @@
 		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.dariom</groupId>
 	<artifactId>service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>service</name>
@@ -44,6 +44,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.dariom</groupId>
+			<artifactId>domainmodel</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
