@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <packaging>pom</packaging>
@@ -54,8 +54,8 @@
     <modules>
         <module>bootstrap</module>
         <module>infrastructure</module>
-        <module>domainmodel</module>
-        <module>service</module>
+        <module>domain</module>
+        <module>application</module>
     </modules>
 
 </project>

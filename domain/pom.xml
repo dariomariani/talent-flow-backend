@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dariom</groupId>
-    <artifactId>domainmodel</artifactId>
+    <artifactId>domain</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>domainmodel</name>
-    <description>domainmodel</description>
+    <name>domain</name>
+    <description>domain</description>
     <url/>
     <licenses>
         <license/>

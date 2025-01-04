@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dariom</groupId>
-	<artifactId>service</artifactId>
+	<artifactId>application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>service</name>
 	<description>service</description>
@@ -47,7 +47,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.dariom</groupId>
-			<artifactId>domainmodel</artifactId>
+			<artifactId>domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
