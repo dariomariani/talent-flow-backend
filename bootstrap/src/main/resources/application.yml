@@ -1,1 +1,33 @@
-spring.application.name=bootstrap
+spring:
+  application:
+    name: talent_flow
+  datasource:
+    url: jdbc:postgresql://localhost:5432/talent_flow?currentSchema=public
+    username: myuser
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none  # Options: none, validate, update, create-drop
+    show-sql: true  # Enables SQL logging
+
+  sql:
+    init:
+      mode: never  # Runs initialization scripts on startup
+
+management:
+  health:
+    defaults:
+      enabled: true
+    db:
+      enabled: true  # Enables database health check
+    diskspace:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
