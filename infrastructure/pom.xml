@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dariom</groupId>
@@ -35,6 +35,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -47,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>com.dariom</groupId>
-            <artifactId>domain</artifactId>
+            <artifactId>application</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

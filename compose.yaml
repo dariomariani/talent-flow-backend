@@ -1,1 +1,36 @@
 services:
+  db:
+    image: postgres:15
+    container_name: talent_flow_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: talent_flow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+  db_init:
+    image: postgres:15
+    container_name: db_initializer
+    depends_on:
+      - db
+    volumes:
+      - ./init.sql:/init.sql
+    restart: "no"
+    entrypoint: >
+      sh -c "
+      until PGPASSWORD=mypassword psql -h db -U myuser -d talent_flow -c 'SELECT 1' &> /dev/null; do
+        echo 'Waiting for database...';
+        sleep 2;
+      done;
+      echo 'Database is ready! Running migrations...';
+      PGPASSWORD=mypassword psql -h db -U myuser -d talent_flow -f /init.sql;
+      echo 'Migration complete!';
+      "
+
+volumes:
+  pgdata:
