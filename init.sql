@@ -4,12 +4,12 @@ CREATE TABLE IF NOT EXISTS users
     SERIAL
     PRIMARY
     KEY,
-    username
+    display_name
     VARCHAR
 (
     50
 ) UNIQUE NOT NULL,
-    email VARCHAR
+    username VARCHAR
 (
     100
 ) UNIQUE NOT NULL,
@@ -19,9 +19,11 @@ CREATE TABLE IF NOT EXISTS users
 ) NOT NULL
     );
 
-INSERT INTO users (username, email, password)
-VALUES ('recruiter', 'recruiter@ecorp.com', '12345'),
-       ('it_candidate', 'it_candidate@ecorp.com', '12345'),
-       ('b_candidate', 'b_candidate@ecorp.com', '12345'),
-       ('it_manager', 'it_manager@ecorp.com', '12345'),
-       ('b_manager', 'b_manager@ecorp.com', '12345');
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+INSERT INTO users (display_name, username, password)
+VALUES ('recruiter', 'recruiter@ecorp.com', crypt('12345', gen_salt('bf'))),
+       ('it_candidate', 'it_candidate@ecorp.com', crypt('12345', gen_salt('bf'))),
+       ('b_candidate', 'b_candidate@ecorp.com', crypt('12345', gen_salt('bf'))),
+       ('it_manager', 'it_manager@ecorp.com', crypt('12345', gen_salt('bf'))),
+       ('b_manager', 'b_manager@ecorp.com', crypt('12345', gen_salt('bf')));

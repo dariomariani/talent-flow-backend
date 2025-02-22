@@ -9,19 +9,23 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none  # Options: none, validate, update, create-drop
-    show-sql: true  # Enables SQL logging
-
+      ddl-auto: update  # Options: none, validate, update, create-drop
+    show-sql: true
   sql:
     init:
-      mode: never  # Runs initialization scripts on startup
+      mode: never
+
+logging:
+  level:
+    sql: debug
+    org.hibernate.orm.jdbc.bind: trace
 
 management:
   health:
     defaults:
       enabled: true
     db:
-      enabled: true  # Enables database health check
+      enabled: true
     diskspace:
       enabled: true
   endpoint:
@@ -31,3 +35,7 @@ management:
     web:
       exposure:
         include: "*"
+
+talent-flow:
+  jwt:
+    secret: "610c653a5bd605513146d2197b840850c698529e2d319b8061f7562b62d50f26"
