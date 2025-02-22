@@ -1,6 +1,6 @@
 package com.dariom.security.service;
 
-import com.dariom.application.TokenService;
+import com.dariom.service.TokenService;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;

@@ -1,10 +1,8 @@
 package com.dariom.security.service;
 
 import com.dariom.dto.LoginDto;
-import com.dariom.dto.RegisterDto;
-import com.dariom.persistence.entities.UserEntity;
 import com.dariom.persistence.repositories.UserRepository;
-import com.dariom.application.AuthenticationService;
+import com.dariom.service.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,19 +25,10 @@ public class BasicAuthenticationService implements AuthenticationService {
     }
 
     @Override
-    public void register(RegisterDto registerDto) {
-        UserEntity user = UserEntity.builder()
-                            .username(registerDto.getEmail())
-                            .displayName(registerDto.getFullName())
-                            .password(registerDto.getPassword())
-                            .build();
-        userRepository.save(user);
-    }
-
-    @Override
     public UserDetails authenticate(LoginDto loginDto) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+            log.info("Authenticated successfully user: {}", loginDto.getUsername());
             return userRepository.findByUsername(loginDto.getUsername()).orElseThrow();
         }
         catch (AuthenticationException e) {

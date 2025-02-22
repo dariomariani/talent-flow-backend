@@ -3,14 +3,15 @@ package com.dariom.controller;
 import com.dariom.dto.ApiResponse;
 import com.dariom.dto.AuthDto;
 import com.dariom.dto.LoginDto;
-import com.dariom.application.AuthenticationService;
-import com.dariom.application.TokenService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import com.dariom.service.AuthenticationService;
+import com.dariom.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequestMapping("/auth")
@@ -30,15 +31,6 @@ public class AuthController {
         return ApiResponse.success(AuthDto.builder()
                 .token(tokenService.generateToken(userDetails))
                 .build());
-    }
-
-    @SecurityRequirement(name = "BearerAuth")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
-    @PostMapping("/logout")
-    public ApiResponse<String> logout(@RequestHeader("Authorization") String authHeader) {
-        String userName = tokenService.getUsernameFromToken(authHeader.substring("Bearer ".length()));
-        log.info("Logged out user: {}", userName);
-        return ApiResponse.success("Logged out successfully.");
     }
 
 }
