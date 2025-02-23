@@ -1,8 +1,7 @@
-package com.dariom.security.service;
+package com.dariom.service;
 
 import com.dariom.dto.LoginDto;
 import com.dariom.persistence.repositories.UserRepository;
-import com.dariom.service.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

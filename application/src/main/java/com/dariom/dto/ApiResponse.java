@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ApiResponse <T> {
-    private T data;
+    private T payload;
     private String message;
     private boolean success;
 
@@ -14,8 +14,8 @@ public class ApiResponse <T> {
         return new ApiResponse<>(null, message, false);
     }
 
-    public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(data, null, true);
+    public static <T> ApiResponse<T> success(T payload) {
+        return new ApiResponse<>(payload, "", true);
     }
 
     public static <T> ApiResponse<T> success(String message) {

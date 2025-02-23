@@ -6,9 +6,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan("com.dariom.configuration")
+@ComponentScan("com.dariom.configuration.mapper")
 @ComponentScan("com.dariom.controller")
 @ComponentScan("com.dariom.filters")
-@ComponentScan("com.dariom.security.service")
+@ComponentScan("com.dariom.service")
 @EntityScan(basePackages = "com.dariom.persistence.entities")
 @SpringBootApplication
 public class BootstrapApplication {
