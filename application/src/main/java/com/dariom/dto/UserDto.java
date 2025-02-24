@@ -10,4 +10,5 @@ import lombok.*;
 public class UserDto {
     private String displayName;
     private String username;
+    private String role;
 }

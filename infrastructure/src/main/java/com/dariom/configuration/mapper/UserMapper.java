@@ -19,7 +19,7 @@ public interface  UserMapper {
         if (roleEntity == null) return null;
         final String roleName = roleEntity.getName();
         try {
-            return Role.valueOf(Role.class, roleName);
+            return Role.valueOf(Role.class, roleName.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Invalid role name: " + roleName);
         }
