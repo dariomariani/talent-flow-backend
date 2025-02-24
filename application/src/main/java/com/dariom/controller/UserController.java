@@ -1,6 +1,6 @@
 package com.dariom.controller;
 
-import com.dariom.configuration.UserDtoMapper;
+import com.dariom.configuration.mapper.UserDtoMapper;
 import com.dariom.domain.service.UserDomainService;
 import com.dariom.dto.ApiResponse;
 import com.dariom.dto.UserDto;
