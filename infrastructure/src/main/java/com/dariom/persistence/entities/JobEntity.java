@@ -3,7 +3,6 @@ package com.dariom.persistence.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -27,9 +26,6 @@ public class JobEntity {
 
     @Column(nullable = false)
     private String location;
-
-    @Column(nullable = false)
-    private LocalDateTime publishDate;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ApplicationEntity> applications;

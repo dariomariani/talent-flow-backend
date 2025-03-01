@@ -19,7 +19,7 @@ public class JobEntityService implements JobDomainService {
     private JobMapper jobMapper;
 
     @Override
-    public List<Job> findOpenJobsOrderedByPublishDate() {
-        return jobMapper.toJobs(jobRepository.findOpenJobsOrderedByPublishDate());
+    public List<Job> getAll() {
+        return jobMapper.toJobs(jobRepository.findAll());
     }
 }

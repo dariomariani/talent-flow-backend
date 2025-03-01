@@ -2,7 +2,6 @@ package com.dariom.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,6 +14,5 @@ public class JobDto {
     private String title;
     private String description;
     private String location;
-    private LocalDateTime publishDate;
     private List<ApplicationDto> applications;
 }

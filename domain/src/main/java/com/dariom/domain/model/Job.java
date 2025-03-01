@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,6 +16,5 @@ public class Job {
     private String title;
     private String description;
     private String location;
-    private LocalDateTime publishDate;
     private List<Application> applications;
 }

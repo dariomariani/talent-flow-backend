@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface JobDomainService {
 
-    List<Job> findOpenJobsOrderedByPublishDate();
+    List<Job> getAll();
 }
