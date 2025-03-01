@@ -14,11 +14,14 @@ import java.text.ParseException;
 @Service
 public class JwtService implements TokenService {
 
-    @Value("${talent-flow.jwt.secret}")
-    private String secret;
+    private final String secret;
 
-    @Value("${spring.application.name}")
-    private String issuer;
+    private final String issuer;
+
+    public JwtService(@Value("${talent-flow.jwt.secret}") String secret,@Value("${spring.application.name}") String issuer) {
+        this.secret = secret;
+        this.issuer = issuer;
+    }
 
     @Override
     public String generateToken(UserDetails userDetails) {
