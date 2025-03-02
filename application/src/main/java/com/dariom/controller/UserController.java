@@ -1,16 +1,13 @@
 package com.dariom.controller;
 
-import com.dariom.configuration.UserDtoMapper;
+import com.dariom.configuration.mapper.UserDtoMapper;
 import com.dariom.domain.service.UserDomainService;
 import com.dariom.dto.ApiResponse;
 import com.dariom.dto.UserDto;
 import com.dariom.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/users")
@@ -26,7 +23,7 @@ public class UserController {
     @Autowired
     private UserDtoMapper userDtoMapper;
 
-    @PostMapping("/me")
+    @GetMapping("/me")
     public ApiResponse<UserDto> login(@RequestHeader("Authorization") String authorizationHeader) {
         final String token = authorizationHeader.substring(7);
         final String userName = tokenService.getUsernameFromToken(token);

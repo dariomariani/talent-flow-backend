@@ -1,6 +1,6 @@
 package com.dariom.service;
 
-import com.dariom.configuration.UserMapper;
+import com.dariom.configuration.mapper.UserMapper;
 import com.dariom.domain.model.User;
 import com.dariom.domain.service.UserDomainService;
 import com.dariom.persistence.entities.UserEntity;

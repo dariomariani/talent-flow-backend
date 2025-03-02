@@ -1,4 +1,4 @@
-package com.dariom.configuration;
+package com.dariom.configuration.mapper;
 
 import com.dariom.domain.model.Role;
 import com.dariom.domain.model.User;
@@ -19,7 +19,7 @@ public interface  UserMapper {
         if (roleEntity == null) return null;
         final String roleName = roleEntity.getName();
         try {
-            return Role.valueOf(Role.class, roleName);
+            return Role.valueOf(Role.class, roleName.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Invalid role name: " + roleName);
         }

@@ -1,4 +1,4 @@
-package com.dariom.configuration;
+package com.dariom.configuration.mapper;
 
 import com.dariom.domain.model.User;
 import com.dariom.dto.UserDto;
