@@ -9,7 +9,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update  # Options: none, validate, update, create-drop
+#      ddl-auto: update  # Options: none, validate, update, create-drop
+      ddl-auto: none
     show-sql: true
   sql:
     init:

@@ -16,11 +16,14 @@ public class ApplicationEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
-    private JobEntity job;
+    private JobEntity job;*/
 
-    @OneToOne
+    @Column(name = "job_id", nullable = false)
+    private Integer jobId;
+
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 

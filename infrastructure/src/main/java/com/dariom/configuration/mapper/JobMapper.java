@@ -11,6 +11,8 @@ public interface JobMapper {
 
     Job toJob(JobEntity jobEntity);
 
+    JobEntity toJobEntity(Job job);
+
     List<Job> toJobs(List<JobEntity> jobEntities);
 
 }
