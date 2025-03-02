@@ -35,16 +35,16 @@ class JobEntityServiceTest {
 
     @BeforeEach
     void setUp() {
-        Job job1 = Job.builder().id(1L).title("Software Engineer").description("Develop software").location("New " +
+        Job job1 = Job.builder().id(1).title("Software Engineer").description("Develop software").location("New " +
                 "York").build();
         Job job2 =
-                Job.builder().id(2L).title("Data Scientist").description("Analyze data").location("San Francisco").build();
+                Job.builder().id(2).title("Data Scientist").description("Analyze data").location("San Francisco").build();
         jobs = Arrays.asList(job1, job2);
 
         JobEntity jobEntity1 =
-                JobEntity.builder().id(1L).title("Software Engineer").description("Develop software").location("New " +
+                JobEntity.builder().id(1).title("Software Engineer").description("Develop software").location("New " +
                 "York").build();
-        JobEntity jobEntity2 = JobEntity.builder().id(2L).title("Data Scientist").description("Analyze data").location(
+        JobEntity jobEntity2 = JobEntity.builder().id(2).title("Data Scientist").description("Analyze data").location(
                 "San Francisco").build();
         jobEntities = Arrays.asList(jobEntity1, jobEntity2);
     }

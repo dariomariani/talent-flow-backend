@@ -81,16 +81,16 @@ class ApplicationTests {
     void setUp() {
         when(userDetails.getUsername()).thenReturn(testUserName);
         when(userDetailsService.loadUserByUsername(testUserName)).thenReturn(userDetails);
-        Job job1 = Job.builder().id(1L).title("Software Engineer").description("Develop software").location("New " +
+        Job job1 = Job.builder().id(1).title("Software Engineer").description("Develop software").location("New " +
                 "York").build();
         Job job2 =
-                Job.builder().id(2L).title("Data Scientist").description("Analyze data").location("San Francisco").build();
+                Job.builder().id(2).title("Data Scientist").description("Analyze data").location("San Francisco").build();
         jobs = Arrays.asList(job1, job2);
 
-        JobDto jobDto1 = JobDto.builder().id(1L).title("Software Engineer").description("Develop software").location(
+        JobDto jobDto1 = JobDto.builder().id(1).title("Software Engineer").description("Develop software").location(
                 "New York").build();
         JobDto jobDto2 =
-                JobDto.builder().id(2L).title("Data Scientist").description("Analyze data").location("San " +
+                JobDto.builder().id(2).title("Data Scientist").description("Analyze data").location("San " +
                         "Francisco").build();
         jobDtos = Arrays.asList(jobDto1, jobDto2);
 

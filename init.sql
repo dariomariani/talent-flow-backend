@@ -79,40 +79,56 @@ CREATE TABLE IF NOT EXISTS job
     title VARCHAR(50) UNIQUE NOT NULL,
     description VARCHAR(100) UNIQUE NOT NULL,
     location VARCHAR(255) NOT NULL,
+    status VARCHAR(50),
     publish_date TIMESTAMP(6)
 );
 
 --populate jobs
 
-INSERT INTO job (title, description, location, publish_date)
-SELECT 'Scrum Master', 'You will help teams to be more and more agile', 'Lucca, Italy',
+INSERT INTO job (title, description, location, status, publish_date)
+SELECT 'Scrum Master', 'You will help teams to be more and more agile', 'Lucca, Italy', 'OPEN',
        TO_TIMESTAMP('2024-03-01T14:30:00', 'YYYY-MM-DDTHH24:MI.SS.FF')
 UNION ALL
-SELECT 'Junior Developer', 'If you want to start a tech career this is the job for you', 'Lucca, Italy',
+SELECT 'Junior Developer', 'If you want to start a tech career this is the job for you', 'Lucca, Italy', 'OPEN',
        TO_TIMESTAMP('2024-04-02T12:30:00.313+08:00', 'yyyy-mm-ddThh24:mi.ss.ff')
 UNION ALL
 SELECT 'Frontend Developer', 'To apply to this job you should know React, Angular, Vue, and 736479 other fancy ' ||
                              'frameworks',
-       'Salerno, Italy',
+       'Salerno, Italy', 'OPEN',
                     TO_TIMESTAMP('2024-05-01T11:30:00.313+08:00', 'yyyy-mm-ddThh24:mi.ss.ff')
 UNION ALL
 SELECT 'Backend Developer', 'To apply to this job you should know Java,C#, C++ and 746832 other languages', 'Salerno,' ||
-                                                                                                            ' Italy',
+                                                                                                            ' Italy', 'OPEN',
                                  TO_TIMESTAMP('2025-01-01T10:30:00.313+08:00', 'yyyy-mm-ddThh24:mi.ss.ff')
 UNION ALL
-SELECT 'HR Recruiter', 'You will help to recruit new resources in a fast growing company.', 'Dublin, Ireland',
+SELECT 'HR Recruiter', 'You will help to recruit new resources in a fast growing company.', 'Dublin, Ireland', 'OPEN',
                                               TO_TIMESTAMP('2024-07-12T09:30:00.313+08:00', 'yyyy-mm-ddThh24:mi.ss.ff')
 UNION ALL
-SELECT 'Career Manager', 'With this job you will guide the employees through their career.', 'Dublin, Ireland',
+SELECT 'Career Manager', 'With this job you will guide the employees through their career.', 'Dublin, Ireland', 'OPEN',
                                                            TO_TIMESTAMP('2024-06-12T09:30:00.313+08:00', 'yyyy-mm-ddThh24:mi.ss.ff')
 UNION ALL
-SELECT 'Senior Accountant', 'A job for managin the whole company account.', 'Dublin, Ireland', TO_TIMESTAMP
+SELECT 'Senior Accountant', 'A job for managin the whole company account.', 'Dublin, Ireland', 'CLOSED',TO_TIMESTAMP
 ('2024-07-12T09:30:00.313+08:00', 'yyyy-mm-ddThh24:mi.ss.ff')
 
 ON CONFLICT (title) DO NOTHING;
 
 --end populate jobs
 
+CREATE TABLE IF NOT EXISTS application
+(
+    id SERIAL PRIMARY KEY,
+    status  VARCHAR(255),
+    job_id  BIGINT REFERENCES job(id),
+    user_id BIGINT REFERENCES users(id)
+);
+
+INSERT INTO application (status, job_id, user_id)
+SELECT 'Waiting for feedback', j.id, u.id
+FROM job j
+         JOIN users u ON u.username = 'brian_candidate@ecorp.com'
+WHERE j.title = 'Scrum Master';
+
+--
 CREATE TABLE IF NOT EXISTS application
 (
     id SERIAL PRIMARY KEY,

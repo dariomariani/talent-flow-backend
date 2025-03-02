@@ -10,4 +10,13 @@ public enum ApplicationStatus {
     ApplicationStatus(String displayName) {
         this.displayName = displayName;
     }
+
+    public static ApplicationStatus fromDisplayName(String displayName) {
+        for (ApplicationStatus status : ApplicationStatus.values()) {
+            if (status.displayName.equalsIgnoreCase(displayName)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant with displayName: " + displayName);
+    }
 }
