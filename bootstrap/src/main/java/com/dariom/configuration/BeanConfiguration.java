@@ -3,6 +3,7 @@ package com.dariom.configuration;
 import com.dariom.domain.service.JobDomainService;
 import com.dariom.domain.service.JobEntityRepository;
 import com.dariom.domain.service.impl.JobDomainServiceImpl;
+import com.dariom.domain.strategy.JobRetrieveStrategyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

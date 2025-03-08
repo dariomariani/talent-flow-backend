@@ -72,32 +72,29 @@ class ApplicationTests {
 
     private String jwtToken;
 
-    @BeforeAll
-    static void setup() {
-
-    }
-
     @BeforeEach
     void setUp() {
         when(userDetails.getUsername()).thenReturn(testUserName);
         when(userDetailsService.loadUserByUsername(testUserName)).thenReturn(userDetails);
-        Job job1 = Job.builder().id(1).title("Software Engineer").description("Develop software").location("New " +
-                "York").build();
+        Job job1 = Job.builder().id(1).title("Software Engineer")
+                .description("Develop software").location("New York").build();
         Job job2 =
-                Job.builder().id(2).title("Data Scientist").description("Analyze data").location("San Francisco").build();
+                Job.builder().id(2).title("Data Scientist")
+                        .description("Analyze data").location("San Francisco").build();
         jobs = Arrays.asList(job1, job2);
 
-        JobDto jobDto1 = JobDto.builder().id(1).title("Software Engineer").description("Develop software").location(
-                "New York").build();
+        JobDto jobDto1 = JobDto.builder().id(1).title("Software Engineer")
+                .description("Develop software").location("New York").build();
         JobDto jobDto2 =
-                JobDto.builder().id(2).title("Data Scientist").description("Analyze data").location("San " +
-                        "Francisco").build();
+                JobDto.builder().id(2).title("Data Scientist")
+                        .description("Analyze data").location("San Francisco").build();
         jobDtos = Arrays.asList(jobDto1, jobDto2);
 
         JwtService jwtService = new JwtService(jwtSecret, "test_api");
         jwtToken = jwtService.generateToken(userDetails);
         mockMvc =
-                MockMvcBuilders.standaloneSetup(jobController).setControllerAdvice(new RestApiExceptionHandler())
+                MockMvcBuilders.standaloneSetup(jobController)
+                        .setControllerAdvice(new RestApiExceptionHandler())
                         .addFilter(new JwtSecurityFilter(jwtService, userDetailsService))
                         .build();
     }
@@ -109,11 +106,14 @@ class ApplicationTests {
         when(jobDtoMapper.toJobsDto(jobs)).thenReturn(jobDtos);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/jobs")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + jwtToken))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + jwtToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.payload").isArray())
-                .andExpect(jsonPath("$.payload[0].title").value("Software Engineer"))
-                .andExpect(jsonPath("$.payload[1].title").value("Data Scientist"));
+                .andExpect(jsonPath("$.payload[0].title")
+                        .value("Software Engineer"))
+                .andExpect(jsonPath("$.payload[1].title")
+                        .value("Data Scientist"));
 
         verify(jobDomainService, times(1)).getAll();
         verify(jobDtoMapper, times(1)).toJobsDto(jobs);

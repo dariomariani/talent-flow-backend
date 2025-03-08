@@ -18,8 +18,4 @@ public class Job {
     private LocalDateTime publishDate;
     private JobStatus status;
     private List<Application> applications;
-
-    public boolean isOpen(){
-        return status == JobStatus.OPEN && applications.size() < 10;
-    }
 }

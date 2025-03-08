@@ -1,8 +1,9 @@
 package com.dariom.controller;
 
 import com.dariom.configuration.mapper.JobDtoMapper;
-import com.dariom.domain.model.JobRetrieveStrategy;
 import com.dariom.domain.service.JobDomainService;
+import com.dariom.domain.strategy.JobRetrieveStrategy;
+import com.dariom.domain.strategy.JobRetrieveStrategyFactory;
 import com.dariom.dto.ApiResponse;
 import com.dariom.dto.JobDto;
 import com.dariom.dto.NewJobDto;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/jobs")
 @RestController
@@ -25,32 +25,23 @@ public class JobController {
     private JobDtoMapper jobDtoMapper;
 
     @GetMapping()
-    public ApiResponse<List<JobDto>> getJobs(@RequestParam(name = "isOpen", required = false) Boolean isOpen,
+    public ApiResponse<List<JobDto>> getJobs(@RequestParam(name = "status", required = false) String status,
                                              @RequestParam(name = "orderBy", required = false) String orderByField,
                                              WebRequest webRequest) {
 
-        Map<String, String[]> queryParams = webRequest.getParameterMap();
-        if (queryParams.isEmpty()) {
+        if (webRequest.getParameterMap().isEmpty()) {
             return ApiResponse.success(jobDtoMapper.toJobsDto(jobDomainService.getAll()));
         }
 
-        JobRetrieveStrategy strategy = JobRetrieveStrategy.builder().build();
+        JobRetrieveStrategy jobRetrieveStrategy = JobRetrieveStrategyFactory.createStrategy(status, orderByField);
 
-        if (queryParams.containsKey("isOpen")) strategy = strategy.toBuilder()
-                .open(Boolean.parseBoolean(queryParams.get("isOpen")[0]))
-                .build();
-
-        if (queryParams.containsKey("orderBy")) strategy = strategy.toBuilder()
-                .orderByField(queryParams.get("orderBy")[0])
-                .build();
-
-        return ApiResponse.success(jobDtoMapper.toJobsDto(jobDomainService.getAllByStrategy(strategy)));
+        return ApiResponse.success(jobDtoMapper.toJobsDto(jobDomainService.getAllByStrategy(jobRetrieveStrategy)));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ApiResponse<Void> createJob(@RequestBody NewJobDto job) {
-        jobDomainService.createJob(jobDtoMapper.toJob(job));
+        jobDomainService.publishJob(jobDtoMapper.toJob(job));
         return ApiResponse.success();
     }
 

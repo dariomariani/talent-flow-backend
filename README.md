@@ -45,7 +45,7 @@ To start the backend service, follow these steps:
 ### **➤ Using Maven**
 ```sh
 ./mvnw clean install
-java -jar target/your-app-name.jar
+java -jar target/bootstrap-VERSION.jar
 ```
 
 ### **➤ Using an IDE (IntelliJ / VS Code / Eclipse)**
