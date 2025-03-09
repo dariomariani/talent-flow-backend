@@ -18,7 +18,8 @@ public class JwtService implements TokenService {
 
     private final String issuer;
 
-    public JwtService(@Value("${talent-flow.jwt.secret}") String secret,@Value("${spring.application.name}") String issuer) {
+    public JwtService(@Value("${talent-flow.jwt.secret}") String secret,
+                      @Value("${spring.application.name}") String issuer) {
         this.secret = secret;
         this.issuer = issuer;
     }

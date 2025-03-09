@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: talent_flow_integration_test
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -12,3 +14,7 @@ spring:
 logging:
   level:
     org.springframework.web.client: TRACE
+
+talent-flow:
+  jwt:
+    secret: "610c653a5bd675513146d5197b840850c698529e2d319b8061f7562b62d58f26"

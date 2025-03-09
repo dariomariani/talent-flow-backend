@@ -1,4 +1,4 @@
-package com.dariom.configuration;
+package com.dariom.integrationtests;
 
 import com.dariom.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Profile("!test")
 @Configuration
-public class AuthenticationConfig {
-
+@Profile("test")
+public class TestAuthConfiguration {
     @Autowired
     private UserRepository userRepository;
 
@@ -27,13 +27,13 @@ public class AuthenticationConfig {
     }
 
     @Bean
-    BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

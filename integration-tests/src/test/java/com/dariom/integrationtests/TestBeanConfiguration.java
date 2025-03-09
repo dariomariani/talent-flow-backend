@@ -1,4 +1,4 @@
-package com.dariom.configuration;
+package com.dariom.integrationtests;
 
 import com.dariom.domain.service.JobDomainService;
 import com.dariom.domain.service.JobEntityRepository;
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("!test")
-public class BeanConfiguration {
+@Profile("test")
+public class TestBeanConfiguration {
 
     @Autowired
     private JobEntityRepository jobEntityRepository;
