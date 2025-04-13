@@ -1,17 +1,21 @@
 package com.dariom.integrationtests;
 
 import com.dariom.filters.JwtSecurityFilter;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//@TestConfiguration(proxyBeanMethods = false)
-//@EnableWebSecurity
-//@Configuration
-//@Profile("test")
+@TestConfiguration(proxyBeanMethods = false)
+@EnableWebSecurity
+@Configuration
+@Profile("test")
 public class TestSecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;

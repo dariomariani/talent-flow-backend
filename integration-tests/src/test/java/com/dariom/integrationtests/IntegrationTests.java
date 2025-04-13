@@ -1,8 +1,8 @@
 package com.dariom.integrationtests;
 
-import com.dariom.dto.ApiResponse;
-import com.dariom.dto.AuthDto;
-import com.dariom.dto.LoginDto;
+import com.dariom.domain.model.JobStatus;
+import com.dariom.domain.model.Role;
+import com.dariom.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +18,30 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @Import(TestcontainersConfiguration.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(locations="classpath:application-test.yml")
-@ActiveProfiles("test")
-@Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @ComponentScan("com.dariom.configuration.mapper")
 @ComponentScan("com.dariom.configuration")
 @ComponentScan("com.dariom.filters")
 @ComponentScan("com.dariom.controller")
 @ComponentScan("com.dariom.service")
+@ComponentScan("com.dariom.integrationtests")
 @EnableJpaRepositories(basePackages = "com.dariom.persistence.repositories")
 @EntityScan(basePackages = "com.dariom.persistence.entities")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations="classpath:application-test.yml")
+@ActiveProfiles("test")
+@Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class IntegrationTests {
+
+	private final String testToken = "eyJhbGciOiJIUzI1NiJ9" +
+			".eyJpc3MiOiJ0YWxlbnRfZmxvd19pbnRlZ3JhdGlvbl90ZXN0Iiwic3ViIjoia2VpdGhfcmVjcnVpdGVyQGVjb3JwLmNvbSJ9." +
+			"3SfJeJLfazIYX73lqIcXDf1MKekLrG3d2VlL3ZJqwjQ";
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -52,9 +60,81 @@ class IntegrationTests {
 	}
 
 	@Test
+	void loginFailed() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		LoginDto loginDto = new LoginDto("wrong_user", "wrong_password");
+		HttpEntity<LoginDto> request = new HttpEntity<>(loginDto, headers);
+		ResponseEntity<String> response = restTemplate.exchange("/auth/login",
+				HttpMethod.POST,
+				request, new ParameterizedTypeReference<>() {});
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+	}
+
+	@Test
 	void getMeUnauthorized() {
 		ResponseEntity<String> response = restTemplate.getForEntity("/users/me", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+	}
+
+	@Test
+	void loginThenGetMeOk() {
+		//login
+		HttpHeaders headersLogin = new HttpHeaders();
+		headersLogin.set("Content-Type", "application/json");
+		LoginDto loginDto = new LoginDto("keith_recruiter@ecorp.com", "12345");
+		HttpEntity<LoginDto> loginRequest = new HttpEntity<>(loginDto, headersLogin);
+		ResponseEntity<ApiResponse<AuthDto>> loginResponse = restTemplate.exchange("/auth/login",
+				HttpMethod.POST,
+				loginRequest, new ParameterizedTypeReference<>() {});
+		assertThat(loginResponse.getBody()).isNotNull();
+		//extract access token
+		String jwtToken = loginResponse.getBody().getPayload().getToken();
+		//perform GET /users/me
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		headers.set("Authorization", "Bearer " + jwtToken);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+		ResponseEntity<ApiResponse<UserDto>> response = restTemplate.exchange("/users/me",
+				HttpMethod.GET,
+				entity, new ParameterizedTypeReference<>() {});
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		UserDto userDtoResponse = response.getBody().getPayload();
+		assertThat(userDtoResponse.getDisplayName()).isEqualTo("Keith Recruiter");
+		assertThat(userDtoResponse.getRole()).isEqualTo(Role.RECRUITER.name());
+		assertThat(userDtoResponse.getUsername()).isEqualTo("keith_recruiter@ecorp.com");
+	}
+
+	@Test
+	void publishNewJob() {
+		final String jobTitle = "QA Tester";
+		final String jobDescription = "This is a test job";
+		final String location = "Florence";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+		final String publishDate = LocalDateTime.now().format(formatter);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		headers.set("Authorization", "Bearer " + testToken);
+		JobDto jobDto = JobDto.builder().title(jobTitle).description(jobDescription)
+				.location(location).publishDate(publishDate)
+				.build();
+		HttpEntity<JobDto> request = new HttpEntity<>(jobDto, headers);
+		ResponseEntity<ApiResponse<JobDto>> response = restTemplate.exchange("/jobs",
+				HttpMethod.POST,
+				request, new ParameterizedTypeReference<>() {});
+
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		assertThat(response.getBody()).isNotNull();
+
+		JobDto createdJob = response.getBody().getPayload();
+		assertThat(createdJob.getStatus()).isEqualTo(JobStatus.OPEN.name());
+		assertThat(createdJob.getTitle()).isEqualTo(jobTitle);
+		assertThat(createdJob.getDescription()).isEqualTo(jobDescription);
+		assertThat(createdJob.getPublishDate()).isEqualTo(publishDate);
+		assertThat(createdJob.getLocation()).isEqualTo(location);
+
 	}
 
 }

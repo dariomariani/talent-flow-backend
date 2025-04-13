@@ -40,9 +40,8 @@ public class JobController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ApiResponse<Void> createJob(@RequestBody NewJobDto job) {
-        jobDomainService.publishJob(jobDtoMapper.toJob(job));
-        return ApiResponse.success();
+    public ApiResponse<JobDto> createJob(@RequestBody NewJobDto job) {
+        return ApiResponse.success(jobDtoMapper.toJobDto(jobDomainService.publishJob(jobDtoMapper.toJob(job))));
     }
 
 }

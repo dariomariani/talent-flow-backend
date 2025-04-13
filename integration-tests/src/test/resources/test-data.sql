@@ -84,34 +84,36 @@ CREATE TABLE IF NOT EXISTS job
     publish_date TIMESTAMP(6)
 );
 
+CREATE SEQUENCE JOB_ID_SEQ;
+
 --populate jobs
 
 INSERT INTO job (id, title, description, location, status, publish_date)
-SELECT 1, 'Scrum Master', 'You will help teams to be more and more agile', 'Lucca, Italy', 'OPEN',
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'Scrum Master', 'You will help teams to be more and more agile', 'Lucca, Italy', 'OPEN',
        PARSEDATETIME('2024-03-01 14:30:00', 'yyyy-MM-dd HH:mm:ss')
 UNION ALL
-SELECT 2, 'Junior Developer', 'If you want to start a tech career this is the job for you', 'Lucca, Italy', 'OPEN',
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'Junior Developer', 'If you want to start a tech career this is the job for you', 'Lucca, Italy', 'OPEN',
        PARSEDATETIME('2024-04-02 12:30:00', 'yyyy-MM-dd HH:mm:ss')
 UNION ALL
-SELECT 3, 'Frontend Developer', 'To apply to this job you should know React, Angular, Vue, and 736479 other fancy ' ||
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'Frontend Developer', 'To apply to this job you should know React, Angular, Vue, and 736479 other fancy ' ||
                              'frameworks',
        'Salerno, Italy', 'OPEN',
        PARSEDATETIME('2024-05-01 11:30:00', 'yyyy-MM-dd HH:mm:ss')
 UNION ALL
-SELECT 4, 'Backend Developer', 'To apply to this job you should know Java,C#, C++ and 746832 other languages',
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'Backend Developer', 'To apply to this job you should know Java,C#, C++ and 746832 other languages',
        'Salerno,' ||
                                                                                                             ' Italy', 'OPEN',
        PARSEDATETIME('2025-01-01 10:30:00', 'yyyy-MM-dd HH:mm:ss')
 UNION ALL
-SELECT 5, 'HR Recruiter', 'You will help to recruit new resources in a fast growing company.', 'Dublin, Ireland',
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'HR Recruiter', 'You will help to recruit new resources in a fast growing company.', 'Dublin, Ireland',
        'OPEN',
        PARSEDATETIME('2024-07-12 09:30:00', 'yyyy-MM-dd HH:mm:ss')
 UNION ALL
-SELECT 6, 'Career Manager', 'With this job you will guide the employees through their career.', 'Dublin, Ireland',
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'Career Manager', 'With this job you will guide the employees through their career.', 'Dublin, Ireland',
        'OPEN',
        PARSEDATETIME('2024-06-12 09:30:00', 'yyyy-MM-dd HH:mm:ss')
 UNION ALL
-SELECT 7, 'Senior Accountant', 'A job for managin the whole company account.', 'Dublin, Ireland', 'CLOSED',PARSEDATETIME
+SELECT NEXT VALUE FOR JOB_ID_SEQ, 'Senior Accountant', 'A job for managin the whole company account.', 'Dublin, Ireland', 'CLOSED',PARSEDATETIME
 ('2024-07-12 09:30:00', 'yyyy-MM-dd HH:mm:ss');
 
 --end populate jobs

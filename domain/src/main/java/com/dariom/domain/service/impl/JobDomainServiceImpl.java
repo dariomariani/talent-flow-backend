@@ -27,9 +27,9 @@ public class JobDomainServiceImpl implements JobDomainService {
     }
 
     @Override
-    public void publishJob(Job job) {
+    public Job publishJob(Job job) {
         job.setStatus(JobStatus.OPEN);
-        jobEntityRepository.createJob(job);
+        return jobEntityRepository.createJob(job);
     }
 
 }

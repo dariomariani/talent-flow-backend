@@ -11,6 +11,6 @@ public interface JobDomainService {
 
     List<Job> getAllByStrategy(JobRetrieveStrategy strategy);
 
-    void publishJob(Job job);
+    Job publishJob(Job job);
 
 }

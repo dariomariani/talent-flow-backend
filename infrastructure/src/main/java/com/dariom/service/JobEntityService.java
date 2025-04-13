@@ -43,8 +43,8 @@ public class JobEntityService implements JobEntityRepository {
     }
 
     @Override
-    public void createJob(Job job) {
-        jobRepository.save(jobMapper.toJobEntity(job));
+    public Job createJob(Job job) {
+        return jobMapper.toJob(jobRepository.save(jobMapper.toJobEntity(job)));
     }
 
 }

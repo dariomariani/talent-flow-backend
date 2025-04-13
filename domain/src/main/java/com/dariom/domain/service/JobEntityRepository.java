@@ -15,5 +15,5 @@ public interface JobEntityRepository {
 
     List<Job> getAllByStatusSortedBy(JobStatus status, String fieldName);
 
-    void createJob(Job job);
+    Job createJob(Job job);
 }
